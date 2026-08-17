@@ -17,7 +17,6 @@ def render_hero_header():
 def render_sidebar_features():
     st.sidebar.markdown("### OVERVIEW")
     st.sidebar.info("Extract key information, generate concise summaries, highlight important moments, and create chapter timestamps from long videos instantly.")
-    
     st.sidebar.markdown("### KEY FEATURES")
     features = [
         ("📺", "YouTube URL & Upload"),
