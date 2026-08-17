@@ -2,7 +2,8 @@
 .env
 .env.local
 .env.*.local
-
+youtube_cookies.txt
+cookies.txt
 # Virtual environment
 venv/
 .venv/
