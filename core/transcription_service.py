@@ -10,10 +10,8 @@ def get_whisper_model(model_name: str = WHISPER_MODEL):
     return _model_cache[model_name]
 
 def transcribe_audio_whisper(audio_path: str) -> list:
-    # Load Whisper model (base, small, or medium)
-    model = whisper.load_model("base")
+    model = whisper.load_model("base")   # used the whisper base model
     
-    # Pass fp16=False so it doesn't warn on CPU
     result = model.transcribe(audio_path, fp16=False)
     
     segments = []
