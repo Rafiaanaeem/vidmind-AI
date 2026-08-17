@@ -1,0 +1,48 @@
+# Environment variables & API keys (Never commit secrets)
+.env
+.env.local
+.env.*.local
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Application storage, temporary files, and exports
+data/
+temp/
+exports/
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Audio/Video temporary files
+*.mp4
+*.mp3
+*.wav
+*.webm
+*.m4a
+
+# IDE & Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+ehthumbs.db
+Thumbs.db
+
+# Whisper model downloads & local caches
+.cache/
