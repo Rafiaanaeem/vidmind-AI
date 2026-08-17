@@ -11,20 +11,9 @@ from youtube_transcript_api import (
 
 from models.schemas import VideoMetadata
 from config.settings import TEMP_DIR
-
-
-# ============================================================
-# PATHS
-# ============================================================
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 os.makedirs(TEMP_DIR, exist_ok=True)
-
-
-# ============================================================
-# COOKIE FILE DETECTION
-# ============================================================
 
 COOKIES_FILE = None
 
@@ -35,11 +24,6 @@ for name in ["youtube_cookies.txt", "cookies.txt"]:
         COOKIES_FILE = candidate
         print(f"[YouTube] Using cookies: {candidate}")
         break
-
-
-# ============================================================
-# YOUTUBE URL / ID
-# ============================================================
 
 def extract_youtube_id(url: str) -> Optional[str]:
     """
@@ -64,10 +48,6 @@ def extract_youtube_id(url: str) -> Optional[str]:
     return None
 
 
-# ============================================================
-# COMMON YT-DLP OPTIONS
-# ============================================================
-
 def get_base_ydl_options() -> Dict[str, Any]:
     """
     Common yt-dlp configuration.
@@ -79,7 +59,6 @@ def get_base_ydl_options() -> Dict[str, Any]:
         "noplaylist": True,
         "ignoreerrors": False,
 
-        # Don't force a specific browser/client format.
         "extractor_args": {
             "youtube": {
                 "player_client": ["default"],
@@ -92,22 +71,15 @@ def get_base_ydl_options() -> Dict[str, Any]:
 
     return options
 
-
-# ============================================================
-# METADATA
-# ============================================================
-
+# for meta data
 def get_youtube_metadata(url: str) -> VideoMetadata:
     """
     Extract YouTube video metadata without downloading the video.
     """
-
     ydl_opts = get_base_ydl_options()
-
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
         info = ydl.extract_info(url, download=False)
-
         if not info:
             raise RuntimeError(
                 "Unable to retrieve YouTube video information."
@@ -136,11 +108,7 @@ def get_youtube_metadata(url: str) -> VideoMetadata:
             view_count=formatted_views,
         )
 
-
-# ============================================================
-# TRANSCRIPT
-# ============================================================
-
+# for transcript generation
 def get_youtube_transcript(
     video_id: str,
 ) -> Optional[List[Dict[str, Any]]]:
@@ -149,16 +117,12 @@ def get_youtube_transcript(
 
     Compatible with newer youtube-transcript-api versions.
     """
-
     try:
 
         api = YouTubeTranscriptApi()
-
         transcript_list = api.list(video_id)
-
         transcript = None
 
-        # Prefer manually created English transcript
         try:
             transcript = transcript_list.find_manually_created_transcript(
                 ["en"]
@@ -166,7 +130,7 @@ def get_youtube_transcript(
         except Exception:
             pass
 
-        # Otherwise try generated English transcript
+        # use english transcript
         if transcript is None:
 
             try:
@@ -190,7 +154,6 @@ def get_youtube_transcript(
 
         for item in fetched:
 
-            # Newer versions can expose objects instead of dictionaries.
             if hasattr(item, "text"):
 
                 results.append({
@@ -235,18 +198,13 @@ def get_youtube_transcript(
         return None
 
 
-# ============================================================
-# AUDIO DOWNLOAD
-# ============================================================
-
+# for audio download
 def download_youtube_audio(url: str) -> str:
     """
     Download the best available audio from YouTube
     and convert it to MP3 using FFmpeg.
     """
-
     video_id = extract_youtube_id(url) or "yt_audio"
-
     final_path = os.path.join(
         TEMP_DIR,
         f"{video_id}.mp3"
@@ -263,7 +221,7 @@ def download_youtube_audio(url: str) -> str:
     )
 
     ydl_opts = {
-        # Let yt-dlp choose the best available audio.
+        # yt-dlp will choose the best available audio.
         "format": "bestaudio/best",
 
         "outtmpl": output_template,
@@ -305,5 +263,4 @@ def download_youtube_audio(url: str) -> str:
         )
 
     print(f"[YouTube] Audio ready: {final_path}")
-
     return final_path
