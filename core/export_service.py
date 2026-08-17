@@ -8,14 +8,12 @@ from config.settings import EXPORTS_DIR
 
 def export_summary_txt(meta: VideoMetadata, result: SummaryResult) -> str:
     file_path = os.path.join(EXPORTS_DIR, f"Summary_{meta.video_id}.txt")
-    
     content = []
     content.append(f"AI VIDEO SUMMARIZER REPORT")
     content.append("=" * 40)
     content.append(f"Title: {result.title}")
     content.append(f"Source: {meta.source_type.title()} ({meta.url_or_path})")
     content.append(f"Duration: {meta.duration_formatted}\n")
-    
     content.append("SUMMARY OVERVIEW:")
     content.append(result.summary_paragraph)
     content.append("\nKEY HIGHLIGHTS:")
