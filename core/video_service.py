@@ -40,5 +40,4 @@ def extract_audio_from_local_video(file_path: str) -> str:
         .overwrite_output()
         .run(quiet=True)
     )
-
     return output_audio_path
