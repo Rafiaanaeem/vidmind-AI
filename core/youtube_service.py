@@ -14,7 +14,6 @@ from config.settings import TEMP_DIR
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 os.makedirs(TEMP_DIR, exist_ok=True)
-
 COOKIES_FILE = None
 
 for name in ["youtube_cookies.txt", "cookies.txt"]:
@@ -47,12 +46,10 @@ def extract_youtube_id(url: str) -> Optional[str]:
 
     return None
 
-
 def get_base_ydl_options() -> Dict[str, Any]:
     """
     Common yt-dlp configuration.
     """
-
     options = {
         "quiet": True,
         "no_warnings": True,
