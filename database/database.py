@@ -59,12 +59,9 @@ def get_dashboard_stats() -> Dict[str, Any]:
         cursor = conn.cursor()
         cursor.execute("SELECT COUNT(*) as total_videos, SUM(duration_seconds) as total_seconds, SUM(export_count) as total_exports FROM processed_videos")
         row = cursor.fetchone()
-        
         total_videos = row['total_videos'] or 0
         total_seconds = row['total_seconds'] or 0.0
         total_exports = row['total_exports'] or 0
-        
-        # Estimate watch time saved (assuming summary takes ~10% of full watch time)
         saved_hours = round((total_seconds * 0.9) / 3600.0, 1)
         
         return {
