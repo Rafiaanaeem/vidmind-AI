@@ -24,7 +24,7 @@ class VideoMetadata(BaseModel):
     title: str
     duration_seconds: float
     duration_formatted: str
-    source_type: str  # 'youtube' or 'upload'
+    source_type: str  
     url_or_path: str
     uploader: Optional[str] = "Unknown"
     upload_date: Optional[str] = "N/A"
