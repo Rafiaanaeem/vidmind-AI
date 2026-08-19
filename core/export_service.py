@@ -36,11 +36,9 @@ def export_summary_txt(meta: VideoMetadata, result: SummaryResult) -> str:
 def export_summary_pdf(meta: VideoMetadata, result: SummaryResult) -> str:
     file_path = os.path.join(EXPORTS_DIR, f"Summary_{meta.video_id}.pdf")
     doc = SimpleDocTemplate(file_path, pagesize=letter, rightMargin=36, leftMargin=36, topMargin=36, bottomMargin=36)
-    
     styles = getSampleStyleSheet()
     primary_color = colors.HexColor("#6C5CE7")
     dark_color = colors.HexColor("#0F172A")
-    
     title_style = ParagraphStyle('DocTitle', parent=styles['Heading1'], fontSize=22, textColor=primary_color, spaceAfter=8)
     sub_style = ParagraphStyle('DocSub', parent=styles['Normal'], fontSize=10, textColor=colors.gray, spaceAfter=15)
     h2_style = ParagraphStyle('SectionHeader', parent=styles['Heading2'], fontSize=14, textColor=dark_color, spaceBefore=12, spaceAfter=6)
@@ -50,11 +48,9 @@ def export_summary_pdf(meta: VideoMetadata, result: SummaryResult) -> str:
     elements = []
     elements.append(Paragraph("AI Video Summarizer Report", title_style))
     elements.append(Paragraph(f"Video: <b>{result.title}</b> | Duration: {meta.duration_formatted}", sub_style))
-    elements.append(HRFlowable(width="100%", thickness=1, color=primary_color, spaceAfter=12))
-    
+    elements.append(HRFlowable(width="100%", thickness=1, color=primary_color, spaceAfter=12)) 
     elements.append(Paragraph("Executive Summary", h2_style))
     elements.append(Paragraph(result.summary_paragraph, body_style))
-    
     elements.append(Paragraph("Key Insights", h2_style))
     for kp in result.key_points:
         elements.append(Paragraph(f"• {kp}", bullet_style))
