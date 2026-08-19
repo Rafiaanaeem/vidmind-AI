@@ -80,7 +80,7 @@ with tab_summarize:
             progress_bar = st.progress(0, text="Initializing workflow...")
             
             try:
-                # 1. Metadata Extraction
+                # done Metadata Extraction
                 progress_bar.progress(15, text="Validating video source & extracting metadata...")
                 if source_type == "YouTube Link":
                     video_id = extract_youtube_id(youtube_url)
