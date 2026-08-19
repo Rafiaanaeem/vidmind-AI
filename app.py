@@ -113,11 +113,11 @@ with tab_summarize:
                     segments = transcribe_audio_whisper(audio_file)
                     formatted_transcript = format_transcript_with_timestamps(segments)
 
-                # 3. AI Summarization
+                # 3. AI Summarization occurs here
                 progress_bar.progress(80, text="Analyzing transcript with AI (This may take a moment for long videos)...")
                 summary_res = generate_ai_summary(formatted_transcript, summary_length)
 
-                # 4. Save Record
+                # 4. for Saving the Record
                 progress_bar.progress(95, text="Finalizing & saving results...")
                 rec_id = save_summary_record(meta.model_dump(), summary_res.model_dump(), summary_length, "English")
                 
@@ -136,7 +136,6 @@ with tab_summarize:
                 else:
                     st.error(f"Processing Error: {error_msg}")
 
-    # Render Active Summary Results
     if 'active_summary' in st.session_state:
         meta = st.session_state['active_meta']
         summary_res = st.session_state['active_summary']
