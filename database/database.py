@@ -76,7 +76,6 @@ def get_history_records(limit: int = 10) -> List[Dict[str, Any]]:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM processed_videos ORDER BY created_at DESC LIMIT ?", (limit,))
         rows = cursor.fetchall()
-        
         results = []
         for r in rows:
             data = dict(r)
